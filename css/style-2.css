@@ -1,0 +1,25 @@
+:root {
+    --clr-main: #ac6515;
+    --clr-white: #ececec;
+    --clr-gray: #f3b2b242;
+    --clr-red: #bd0606;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--clr-main);
+}
+
+.container {
+    width: 330px;
+    background-color: var(--clr-white);
+    padding: 20px;
+    border: 1px solid var(--clr-white);
+    border-radius: 1rem;
+    box-shadow: 0 0 10px var(--clr-gray);
+    margin: 40px auto;
+}
+h2 {
+    text-align: center;
+    color: var(--clr-main);
+}
