@@ -11,13 +11,13 @@
     <div class="container">
         <h2>Iniciar sesion</h2>
         <form id="login-form">
-            <label for="login-usuario">Usuario:</label>
-            <input type="text" id="login-usuario" name="login-usuario" required><br><br>
-            <label for="login-pass">Contraseña:</label>
-            <input type="password" id="login-pass" name="login-pass" required><br><br>
-            <input type="submit" value="Iniciar sesion">
+            <label class="usuario-texto" for="login-usuario">Usuario:</label>
+            <input type="text" id="login-usuario" class="input-login-registro" name="login-usuario" required><br><br>
+            <label class="pass-texto" for="login-pass">Contraseña:</label>
+            <input type="password" id="login-pass" class="input-login-registro" name="login-pass" required><br><br>
+            <input class="boton-enviar" type="submit" value="Iniciar sesion">
         </form>
-        <p>¿No estas registrado? <a href="registro.html">Registrate</a></p>
+        <p class="texto-cuenta">¿No estas registrado? <a href="registro.html">Registrate</a></p>
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -10,21 +10,21 @@ class Producto {
 
 let productos = []
 
-productos.push(new Producto("1","./img/procesador1.jpg","Procesador Intel Core i5","Procesadores",500))
-productos.push(new Producto("2","./img/procesador2.webp","Procesador AMD Ryzen 5","Procesadores",400))
-productos.push(new Producto("3","./img/placama1.png","Placa Madre ASUS PRIME","Placas Madre",200))
-productos.push(new Producto("4","./img/placama2.png","Placa Madre MSI GAMING","Placas Madre",300))
-productos.push(new Producto("5","./img/ram1.jpg","Memoria RAM Corsair 16GB","RAMs",60))
-productos.push(new Producto("6","./img/ram2.jpg","Memoria RAM Kingston 32GB","RAMs",100))
-productos.push(new Producto("7","./img/placavi1.webp","Placa De Video MSI Geforce Rtx 3050 Ventus 8gb","Placas de Video",500))
-productos.push(new Producto("8","./img/placavi2.webp","Placa De video AMD PowerColor Red Devil RX 6900 XT 16GB","Placas de Video",900))
+productos.push(new Producto("1","./img/procesador1.jpg","Procesador Intel Core i5","Procesadores",500));
+productos.push(new Producto("2","./img/procesador2.webp","Procesador AMD Ryzen 5","Procesadores",400));
+productos.push(new Producto("3","./img/placama1.png","Placa Madre ASUS PRIME","Placas Madre",200));
+productos.push(new Producto("4","./img/placama2.png","Placa Madre MSI GAMING","Placas Madre",300));
+productos.push(new Producto("5","./img/ram1.jpg","Memoria RAM Corsair 16GB","RAMs",60));
+productos.push(new Producto("6","./img/ram2.jpg","Memoria RAM Kingston 32GB","RAMs",100));
+productos.push(new Producto("7","./img/placavi1.webp","Placa De Video MSI Geforce Rtx 3050 Ventus 8gb","Placas de Video",500));
+productos.push(new Producto("8","./img/placavi2.webp","Placa De video AMD PowerColor Red Devil RX 6900 XT 16GB","Placas de Video",900));
 
-const contenedor_productos = document.querySelector("#contenedor-productos")
-const botones_categorias = document.querySelectorAll(".boton-categoria")
-const titulo_principal = document.querySelector("h2")
-let producto_agregar = document.querySelectorAll(".producto-agregar")
-const numerito = document.querySelector("#cantidad")
-const boton_cerrar_sesion = document.querySelector(".cerrar-sesion")
+const contenedor_productos = document.querySelector("#contenedor-productos");
+const botones_categorias = document.querySelectorAll(".boton-categoria");
+const titulo_principal = document.querySelector("h2");
+let producto_agregar = document.querySelectorAll(".producto-agregar");
+const numerito = document.querySelector("#cantidad");
+const boton_cerrar_sesion = document.querySelector(".cerrar-sesion");
 
 function cargar_productos(productos_elegidos) {
     contenedor_productos.innerHTML = "";
@@ -58,7 +58,7 @@ botones_categorias.forEach(boton => {
             const productos_boton = productos.filter(producto => producto.categoria === e.currentTarget.id);
             cargar_productos(productos_boton);
         } else {
-            titulo_principal.innerText = "Todos los Productos"
+            titulo_principal.innerText = "Todos los Productos";
             cargar_productos(productos);
         }
         
@@ -96,6 +96,16 @@ function agregar_al_carrito(e) {
     }
     actualizar_numerito();
     localStorage.setItem("productos-en-carrito", JSON.stringify(productos_en_carrito));
+
+    Toastify({
+        text:`Producto agregado: ${producto_agregado.nombre}`,
+        duration: 3000,
+        close: true,
+        gravity: "top",
+        position: "right",
+        backgroundColor: "linear-gradient(to right, #ac6515, #bd0606)",
+        stopOnFocus: true,
+    }).showToast();
 }
 
 function actualizar_numerito() {
@@ -108,15 +118,15 @@ boton_cerrar_sesion.addEventListener("click", cerrar_sesion);
 function cerrar_sesion() {
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
-            confirmButton: "btn btn-success",
-            cancelButton: "btn btn-danger"
+            confirmButton: "botones-swal",
+            cancelButton: "botones-swal",
         },
     buttonsStyling: false
     });
     return swalWithBootstrapButtons.fire({
         title: "Cerrar sesion",
         text: "¿Estas seguro de que deseas cerrar sesion? Se borrará todo el progreso.",
-        icon: "warning",
+        icon: "question",
         showCancelButton: true,
         confirmButtonText: "Si, cerrar sesion",
         cancelButtonText: "Cancelar",

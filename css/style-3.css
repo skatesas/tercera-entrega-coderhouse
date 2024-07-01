@@ -249,3 +249,19 @@ main {
 .disabled {
     display: none;
 }
+
+.botones-swal {
+    border: 0;
+    background-color: var(--clr-main);
+    color: var(--clr-white);
+    padding: .30rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    border: 2px solid var(--clr-main);
+    transition: background-color .2s, color .2s;
+}
+
+.botones-swal:hover {
+    background-color: var(--clr-white);
+    color: var(--clr-main);
+}

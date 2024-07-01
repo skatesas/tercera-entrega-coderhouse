@@ -4,13 +4,13 @@ const contenedor_carrito_vacio = document.querySelector("#carrito-vacio");
 const contenedor_carrito_productos = document.querySelector("#carrito-productos");
 const contenedor_carrito_acciones = document.querySelector("#carrito-acciones");
 const numerito = document.querySelector("#cantidad");
-let botones_eliminar = document.querySelectorAll(".carrito-eliminar")
+let botones_eliminar = document.querySelectorAll(".carrito-eliminar");
 const boton_vaciar_carrito = document.querySelector("#carrito-acciones-vaciar");
 const contenedor_total = document.querySelector("#total");
 const boton_comprar = document.querySelector("#carrito-acciones-comprar");
 const boton_cerrar_sesion = document.querySelector(".cerrar-sesion")
 
-function cargar_productos_carrito(){
+function cargar_productos_carrito() {
     if (productos_en_carrito && productos_en_carrito.length > 0) {
 
         contenedor_carrito_vacio.classList.add("disabled");
@@ -76,9 +76,40 @@ function eliminar_del_carrito(e) {
 boton_vaciar_carrito.addEventListener("click", vaciar_carrito);
 
 function vaciar_carrito () {
-    productos_en_carrito.length = 0;
-    localStorage.setItem("productos-en-carrito", JSON.stringify(productos_en_carrito));
-    cargar_productos_carrito();
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: "botones-swal",
+            cancelButton: "botones-swal",
+        },
+    buttonsStyling: false
+    });
+    return swalWithBootstrapButtons.fire({
+        title: "Vaciar el Carrito",
+        text: "¿Estas seguro de que deseas quitar lo que hay en el carrito?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si, vaciar",
+        cancelButtonText: "Cancelar",
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            productos_en_carrito.length = 0;
+            localStorage.setItem("productos-en-carrito", JSON.stringify(productos_en_carrito));
+            cargar_productos_carrito();
+            actualizar_numerito();
+            swalWithBootstrapButtons.fire({
+                title: "Carrito vaciado.",
+                text: "Quitaste todo lo que habia en el carrito.",
+                icon: "success"
+            });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            swalWithBootstrapButtons.fire({
+                title: "Cancelado",
+                text: "¡Puedes seguir comprando!",
+                icon: "error"
+            });
+        }
+    });
 }
 
 function actualizar_total() {
@@ -94,42 +125,32 @@ function actualizar_numerito() {
 boton_comprar.addEventListener("click", comprar_carrito);
 
 function comprar_carrito () {
-    productos_en_carrito.length = 0;
-    localStorage.setItem("productos-en-carrito", JSON.stringify(productos_en_carrito));
-    contenedor_carrito_vacio.classList.remove("disabled");
-    contenedor_carrito_productos.classList.add("disabled");
-    contenedor_carrito_acciones.classList.add("disabled");
-}
-
-boton_cerrar_sesion.addEventListener("click", cerrar_sesion);
-
-function cerrar_sesion() {
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
-            confirmButton: "btn btn-success",
-            cancelButton: "btn btn-danger"
+            confirmButton: "botones-swal",
+            cancelButton: "botones-swal",
         },
     buttonsStyling: false
     });
     return swalWithBootstrapButtons.fire({
-        title: "Cerrar sesion",
-        text: "¿Estas seguro de que deseas cerrar sesion? Se borrará todo el progreso.",
-        icon: "warning",
+        title: "Comprar Carrito",
+        text: "¿Estas seguro de que deseas comprar lo que hay en el carrito?",
+        icon: "question",
         showCancelButton: true,
-        confirmButtonText: "Si, cerrar sesion",
+        confirmButtonText: "Si, comprar",
         cancelButtonText: "Cancelar",
         reverseButtons: true
     }).then((result) => {
         if (result.isConfirmed) {
             productos_en_carrito.length = 0;
-            localStorage.setItem("productos-en_carrito", JSON.stringify(productos_en_carrito));
+            localStorage.setItem("productos-en-carrito", JSON.stringify(productos_en_carrito));
             contenedor_carrito_vacio.classList.remove("disabled");
             contenedor_carrito_productos.classList.add("disabled");
             contenedor_carrito_acciones.classList.add("disabled");
-            window.location.href = "./login.html";
+            actualizar_numerito();
             swalWithBootstrapButtons.fire({
-                title: "Sesion cerrada",
-                text: "Has cerrado sesion correctamente.",
+                title: "¡Gracias por tu compra!",
+                text: "Te esperamos nuevamente.",
                 icon: "success"
             });
         } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -142,4 +163,43 @@ function cerrar_sesion() {
     });
 }
 
+boton_cerrar_sesion.addEventListener("click", cerrar_sesion);
 
+function cerrar_sesion() {
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: "botones-swal",
+            cancelButton: "botones-swal",
+        },
+    buttonsStyling: false
+    });
+    return swalWithBootstrapButtons.fire({
+        title: "Cerrar sesion",
+        text: "¿Estas seguro de que deseas cerrar sesion? Se borrara todo el progreso.",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Si, cerrar sesion",
+        cancelButtonText: "Cancelar",
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            productos_en_carrito.length = 0;
+            localStorage.removeItem("productos-en-carrito");
+            contenedor_carrito_vacio.classList.remove("disabled");
+            contenedor_carrito_productos.classList.add("disabled");
+            contenedor_carrito_acciones.classList.add("disabled");
+            window.location.href = "./login.html";
+            swalWithBootstrapButtons.fire({
+                title: "Sesion cerrada.",
+                text: "Has cerrado sesion correctamente.",
+                icon: "success"
+            });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            swalWithBootstrapButtons.fire({
+                title: "Cancelado",
+                text: "¡Puedes seguir comprando!",
+                icon: "error"
+            });
+        }
+    });
+}

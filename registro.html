@@ -10,15 +10,15 @@
     <div class="container">
         <h2>Registro</h2>
         <form id="registro-form">
-            <label for="registro-usuario">Usuario:</label>
-            <input type="text" id="registro-usuario" name="registro-usuario" required><br><br>
-            <label for="registro-pass">Contraseña:</label>
-            <input type="password" id="registro-pass" name="registro-pass" required><br><br>
-            <label for="registro-email">Correo electronico:</label>
-            <input type="email" id="registro-email" name="registro-email" required><br><br>
-            <input type="submit" value="Registrarse">
+            <label class="usuario-texto" for="registro-usuario">Usuario:</label>
+            <input type="text" id="registro-usuario" class="input-login-registro" name="registro-usuario" required><br><br>
+            <label class="pass-texto" for="registro-pass">Contraseña:</label>
+            <input type="password" id="registro-pass" class="input-login-registro" name="registro-pass" required><br><br>
+            <label class="correo-texto" for="registro-email">Correo electronico:</label>
+            <input type="email" id="registro-email" class="input-login-registro" name="registro-email" required><br><br>
+            <input class="boton-enviar" type="submit" value="Registrarse">
         </form>
-        <p>¿Ya tienes cuenta? <a href="login.html">Iniciar sesion</a></p>
+        <p class="texto-cuenta">¿Ya tienes cuenta? <a href="login.html">Iniciar sesion</a></p>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
